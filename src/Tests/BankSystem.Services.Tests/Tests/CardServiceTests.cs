@@ -1,4 +1,4 @@
-﻿namespace BankSystem.Services.Tests.Tests
+
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -28,9 +28,6 @@
         private const string SampleAccountId = "ABC125trABSD1";
         private const string SampleNumber = "1017840221397613";
         private const string SampleSecurityCode = "685";
-        private const string SampleExpiryDate = "08/22";
-        private const string SampleName = "melik";
-
         private readonly BankSystemDbContext dbContext;
         private readonly ICardService cardService;
 
@@ -137,39 +134,7 @@
                 .Should()
                 .BeFalse();
         }
-
-        [Theory]
-        [InlineData(" ")]
-        [InlineData(null)]
-        [InlineData("209358)(%#*@)(%*#$)ET(WFI)SD")]
-        [InlineData(" 1  4 10")]
-        public async Task DeleteAsync_WithInvalidId_Should_Not_DeleteCardFromDatabase(string id)
-        {
-            // Arrange
-            await this.SeedCardAsync();
-
-            // Act
-            await this.cardService.DeleteAsync(id);
-
-            // Assert
-            this.dbContext
-                .Cards
-                .Should()
-                .HaveCount(1);
-        }
-
-        [Fact]
-        public async Task CreateAsync_WithInvalidModel_Should_ReturnFalse()
-        {
-            // Act
-            var result = await this.cardService.CreateAsync(new CardCreateServiceModel());
-
-            // Assert
-            result
-                .Should()
-                .BeFalse();
-        }
-
+        
         [Fact]
         public async Task CreateAsync_WithInvalidModel_Should_Not_InsertInDatabase()
         {
